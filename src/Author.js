@@ -24,9 +24,11 @@ class Author {
     node
       .setSizeMode('absolute', 'absolute')
       .setAbsoluteSize(radius, radius)
+      .addUIEvent('click')
 
     this._setSizeChanged()
     this._startAnimation()
+    this._dispatchEvent()
   }
 
   _setSizeChanged() {
@@ -70,6 +72,18 @@ class Author {
 
     this.node.requestUpdate(updatePosition)
     this.node.requestUpdate(updateOpacity)
+  }
+
+  _dispatchEvent() {
+    this.node.addComponent({
+      onReceive: (type, payload) => {
+        console.log(type)
+        if(type === 'click') {
+          console.log(payload)
+          this.node.emit('article', this.options)
+        }
+      }
+    })
   }
 }
 

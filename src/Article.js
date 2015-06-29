@@ -25,6 +25,7 @@ class Article {
       .setScale(0, 0)
 
     this._openAnimation()
+    this._handleEvents()
   }
 
   _openAnimation() {
@@ -64,6 +65,14 @@ class Article {
     })
 
     this.node.requestUpdate(updatePosition)
+  }
+
+  _handleEvents() {
+    this.node.addComponent({
+      onReceive: (type, payload) => {
+        console.log(type, payload)
+      }
+    })
   }
 }
 
