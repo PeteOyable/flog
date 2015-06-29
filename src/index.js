@@ -5,6 +5,7 @@ import FamousEngine from 'famous/core/FamousEngine'
 
 // Our dependencies
 import Author from './Author'
+import Article from './Article'
 
 let authors = [
     { id : 0, name : 'Julien Boulevart', image : '' },
@@ -13,10 +14,13 @@ let authors = [
 ]
 
 // Initialize with a scene; then, add a 'node' to the scene root
-var scene = FamousEngine.createScene().addChild()
+var sceneAuthor = FamousEngine.createScene('.authors').addChild()
+var sceneArticle = FamousEngine.createScene('.articles')
 
 for(var i = 0; i < authors.length; i++) {
-    new Author(scene.addChild(), authors[i])
+    new Author(sceneAuthor.addChild(), authors[i])
 }
+
+new Article(sceneArticle)
 
 FamousEngine.init()
