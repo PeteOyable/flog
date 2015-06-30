@@ -5,7 +5,8 @@ import Article from './Article'
 let authors = [
     { id : 0, name : 'Julien Boulevart', image : '' },
     { id : 1, name : 'Nicolas Labbé', image : '' },
-    { id : 2, name : 'Fabrice Labbé', image : '' }
+    { id : 2, name : 'Fabrice Labbé', image : '' },
+    // { id : 3, name : 'Fabien Logarinho', image : '' }
 ]
 
 class Flog extends Node {
@@ -17,7 +18,7 @@ class Flog extends Node {
 
   onReceive(event, payload) {
     if(event === 'click') {
-      this.emit('article', payload.node.options)
+      this.emit('article:open', payload.node.options)
     }
   }
 

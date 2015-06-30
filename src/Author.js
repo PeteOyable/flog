@@ -1,6 +1,7 @@
 import Node from 'famous/core/Node'
 import DOMElement from 'famous/dom-renderables/DOMElement'
 import Transitionable from 'famous/transitions/Transitionable'
+import Position from 'famous/components/Position'
 
 var radius = 60
 var marginLeft = 30
@@ -23,6 +24,7 @@ class Author extends Node {
     this
       .setSizeMode('absolute', 'absolute')
       .setAbsoluteSize(radius, radius)
+      .setOrigin(0.5, 0.5)
       .addUIEvent('click')
 
     this._startAnimation()
@@ -35,7 +37,9 @@ class Author extends Node {
   }
 
   onReceive(event, payload) {
-    console.log(event)
+    if(event === 'article:open') {
+      this._articleAnimation()
+    }
   }
 
   _startAnimation() {
@@ -69,6 +73,23 @@ class Author extends Node {
 
     this.requestUpdate(updatePosition)
     this.requestUpdate(updateOpacity)
+  }
+
+  _articleAnimation() {
+    var scaleTransition = new Transitionable()
+    scaleTransition.from(1).to(0, 'linear', 300)
+
+    var updateScale = this.addComponent({
+      onUpdate : (time) => {
+        this.setScale(scaleTransition.get(), scaleTransition.get())
+
+        if(scaleTransition.isActive()) {
+          this.requestUpdate(updateScale)
+        }
+      }
+    })
+
+    this.requestUpdate(updateScale)
   }
 }
 
