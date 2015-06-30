@@ -3,7 +3,7 @@ import DOMElement from 'famous/dom-renderables/DOMElement'
 import Transitionable from 'famous/transitions/Transitionable'
 
 var radius = 60
-var marginLeft = 30
+var marginLeft = 20
 var currentWidth = window.innerWidth
 
 class Author extends Node {
@@ -44,7 +44,10 @@ class Author extends Node {
 
     if(event === 'window:resize') {
       currentWidth = payload.width
-      var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
+      var countAuthors = payload.countAuthors
+      // var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
+      var start = currentWidth/countAuthors
+      var posX = (start * this.options.id) + (start/2) 
       this.setPosition(posX, null)
     }
   }

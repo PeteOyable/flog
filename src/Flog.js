@@ -6,7 +6,11 @@ let authors = [
     { id : 0, name : 'Julien Boulevart', image : 'julien.jpg' },
     { id : 1, name : 'Nicolas Labbé', image : 'nico.jpg' },
     { id : 2, name : 'Fabrice Labbé', image : 'fabrice.jpg' },
-    { id : 3, name : 'Fabien Logarinho', image : 'fabien.jpg' }
+    { id : 3, name : 'Fabien Logarinho', image : 'fabien.jpg' },
+    { id : 4, name : 'John Doe', image : 'julien.jpg' },
+    { id : 5, name : 'Eric Apple', image : 'nico.jpg' },
+    { id : 6, name : 'Cindy Schmidt', image : 'fabrice.jpg' },
+    { id : 7, name : 'Oli Sykes', image : 'fabien.jpg' }
 ]
 
 class Flog extends Node {
@@ -27,7 +31,7 @@ class Flog extends Node {
   }
 
   onSizeChange() {
-    this.emit('window:resize', { width : window.innerWidth })
+    this.emit('window:resize', { width : window.innerWidth, countAuthors : authors.length })
   }
 
   createAuthors() {
