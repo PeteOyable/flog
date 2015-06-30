@@ -7,7 +7,6 @@ var radius = 45
 class Avatar extends Node {
   constructor() {
     super()
-
     this.element = new DOMElement(this, {
       classes : ['avatar'],
       properties : {

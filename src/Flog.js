@@ -18,7 +18,11 @@ class Flog extends Node {
 
   onReceive(event, payload) {
     if(event === 'click') {
-      this.emit('article:open', payload.node.options)
+      if(payload.node instanceof Author) {
+        this.emit('article:open', payload.node.options)
+      } else {
+        this.emit('article:close')
+      }
     }
   }
 

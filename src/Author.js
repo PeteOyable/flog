@@ -1,7 +1,6 @@
 import Node from 'famous/core/Node'
 import DOMElement from 'famous/dom-renderables/DOMElement'
 import Transitionable from 'famous/transitions/Transitionable'
-import Position from 'famous/components/Position'
 
 var radius = 60
 var marginLeft = 30
@@ -12,6 +11,7 @@ class Author extends Node {
     super()
     this.options = options
     this.even = (options.id%2) == 0
+    this.hidden = false
 
     var element = new DOMElement(this, {
       classes : ['author'],
@@ -38,6 +38,10 @@ class Author extends Node {
 
   onReceive(event, payload) {
     if(event === 'article:open') {
+      this._articleAnimation()
+    }
+
+    if(event === 'article:close') {
       this._articleAnimation()
     }
   }
@@ -77,7 +81,13 @@ class Author extends Node {
 
   _articleAnimation() {
     var scaleTransition = new Transitionable()
-    scaleTransition.from(1).to(0, 'linear', 300)
+
+    if(this.hidden) {
+      scaleTransition.from(0).delay(450).to(1, 'linear', 300)
+    } else {
+      scaleTransition.from(1).to(0, 'linear', 300)  
+    }
+    
 
     var updateScale = this.addComponent({
       onUpdate : (time) => {
@@ -88,6 +98,8 @@ class Author extends Node {
         }
       }
     })
+
+    this.hidden = !this.hidden
 
     this.requestUpdate(updateScale)
   }
