@@ -27,15 +27,10 @@ class Author extends Node {
       .setSizeMode('absolute', 'absolute')
       .setAbsoluteSize(radius, radius)
       .setOrigin(0.5, 0.5)
+      .setMountPoint(0.5, 0.5)
       .addUIEvent('click')
 
     this._startAnimation()
-  }
-
-  onSizeChange() {
-    currentWidth = window.innerWidth
-    var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
-    this.setPosition(posX, null)
   }
 
   onReceive(event, payload) {
@@ -45,6 +40,12 @@ class Author extends Node {
 
     if(event === 'article:close') {
       this._articleAnimation()
+    }
+
+    if(event === 'window:resize') {
+      currentWidth = payload.width
+      var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
+      this.setPosition(posX, null)
     }
   }
 

@@ -20,10 +20,6 @@ class Close extends Node {
       .setPosition(window.innerWidth - 50, 30)
       .addUIEvent('click')
   }
-
-  onReceive(event, payload) {
-    console.log(event)
-  }
 }
 
 export default Close
