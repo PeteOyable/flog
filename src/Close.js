@@ -20,6 +20,12 @@ class Close extends Node {
       .setPosition(window.innerWidth - 50, 30)
       .addUIEvent('click')
   }
+
+  onReceive(event) {
+    if(event === 'window:resize') {
+      this.setPosition(window.innerWidth - 50, 30)
+    }
+  }
 }
 
 export default Close
