@@ -1,5 +1,4 @@
-'use strict'
-
+import Node from 'famous/core/Node'
 import DOMElement from 'famous/dom-renderables/DOMElement'
 import Transitionable from 'famous/transitions/Transitionable'
 
@@ -7,13 +6,13 @@ var radius = 60
 var marginLeft = 30
 var currentWidth = window.innerWidth
 
-class Author {
-  constructor(node, options) {
-    this.node = node
+class Author extends Node {
+  constructor(options) {
+    super()
     this.options = options
     this.even = (options.id%2) == 0
 
-    var element = new DOMElement(node, {
+    var element = new DOMElement(this, {
       classes : ['author'],
       properties : {
         'background-color' : '#bada55',
@@ -21,24 +20,22 @@ class Author {
       }
     })
 
-    node
+    this
       .setSizeMode('absolute', 'absolute')
       .setAbsoluteSize(radius, radius)
       .addUIEvent('click')
 
-    this._setSizeChanged()
     this._startAnimation()
-    this._dispatchEvent()
   }
 
-  _setSizeChanged() {
-    this.node.getParent().addComponent({
-      onSizeChange : (size) => {
-        currentWidth = size
-        var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
-        this.node.setPosition(posX, null)
-      }
-    })
+  onSizeChange() {
+    currentWidth = window.innerWidth
+    var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
+    this.setPosition(posX, null)
+  }
+
+  onReceive(event, payload) {
+    console.log(event)
   }
 
   _startAnimation() {
@@ -50,40 +47,28 @@ class Author {
     positionTransition.from(posY).delay(600).to(0.5, 'easeOutBounce', 200)
     opacityTransition.from(0).delay(600).to(1, 'linear', 200)
 
-    var updatePosition = this.node.addComponent({
+    var updatePosition = this.addComponent({
       onUpdate : (time) => {
-        this.node.setAlign(0, positionTransition.get(), 0.5)
+        this.setAlign(0, positionTransition.get(), 0.5)
 
         if(positionTransition.isActive()) {
-          this.node.requestUpdate(updatePosition)
+          this.requestUpdate(updatePosition)
         }
       }
     })
 
-    var updateOpacity = this.node.addComponent({
+    var updateOpacity = this.addComponent({
       onUpdate : () => {
-        this.node.setOpacity(opacityTransition.get())
+        this.setOpacity(opacityTransition.get())
 
         if(opacityTransition.isActive()) {
-          this.node.requestUpdate(updateOpacity)
+          this.requestUpdate(updateOpacity)
         }
       }
     })
 
-    this.node.requestUpdate(updatePosition)
-    this.node.requestUpdate(updateOpacity)
-  }
-
-  _dispatchEvent() {
-    this.node.addComponent({
-      onReceive: (type, payload) => {
-        console.log(type)
-        if(type === 'click') {
-          console.log(payload)
-          this.node.emit('article', this.options)
-        }
-      }
-    })
+    this.requestUpdate(updatePosition)
+    this.requestUpdate(updateOpacity)
   }
 }
 

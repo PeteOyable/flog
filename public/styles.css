@@ -18,12 +18,8 @@ body {
     -webkit-perspective: 0;
     perspective: none;
 }
-.authors {
-    height: 100%;
-    width: 100%;
-}
 
-.articles {
+.copied-article {
     position: absolute;
     top: 0;
     left: 0;
