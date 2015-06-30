@@ -17,7 +17,9 @@ class Author extends Node {
       classes : ['author'],
       properties : {
         'background-color' : '#bada55',
-        'border-radius' : radius + 'px'
+        'border-radius' : radius + 'px',
+        'background-image' : 'url(images/' + options.image + ')',
+        'background-size' : 'cover'
       }
     })
 

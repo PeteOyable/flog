@@ -27,6 +27,9 @@ class Avatar extends Node {
 
   onReceive(event, payload) {
     if(event === 'article:open') {
+      this.element
+        .setProperty('background-image', 'url(images/' + payload.image + ')')
+        .setProperty('background-size', 'cover')
       this._startAnimation()
     }
   }
@@ -34,7 +37,7 @@ class Avatar extends Node {
   _startAnimation() {
     var scaleTransition = new Transitionable()
 
-    scaleTransition.from(0).delay(600).to(1, 'linear', 300)
+    scaleTransition.from(0).delay(600).to(1, 'outExpo', 300)
 
     var updateScale = this.addComponent({
       onUpdate : (time) => {
