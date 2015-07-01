@@ -45,7 +45,6 @@ class Author extends Node {
     if(event === 'window:resize') {
       currentWidth = payload.width
       var countAuthors = payload.countAuthors
-      // var posX = (currentWidth/2) - (radius/2) + ((marginLeft+radius) * this.options.id) - (marginLeft+radius)
       var start = currentWidth/countAuthors
       var posX = (start * this.options.id) + (start/2) 
       this.setPosition(posX, null)
@@ -58,7 +57,7 @@ class Author extends Node {
 
     var posY = this.even ? 0.4 : 0.6
 
-    positionTransition.from(posY).delay(600).to(0.5, 'easeOutBounce', 200)
+    positionTransition.from(posY).delay(600).to(0.5, 'linear', 200)
     opacityTransition.from(0).delay(600).to(1, 'linear', 200)
 
     var updatePosition = this.addComponent({
