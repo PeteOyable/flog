@@ -57,7 +57,7 @@ class Author extends Node {
 
     var posY = this.even ? 0.4 : 0.6
 
-    positionTransition.from(posY).delay(600).to(0.5, 'linear', 200)
+    positionTransition.from(posY).delay(600).to(0.5, 'easeOutBounce', 200)
     opacityTransition.from(0).delay(600).to(1, 'linear', 200)
 
     var updatePosition = this.addComponent({
