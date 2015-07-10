@@ -2,21 +2,17 @@ import Node from 'famous/core/Node'
 import DOMElement from 'famous/dom-renderables/DOMElement'
 import Transitionable from 'famous/transitions/Transitionable'
 
-var radius = 60
-var marginLeft = 20
-var currentWidth = window.innerWidth
-
 class Author extends Node {
   constructor(options) {
     super()
     this.options = options
     this.even = (options.id%2) == 0
     this.hidden = false
+    var radius = 60
 
     var element = new DOMElement(this, {
       classes : ['author'],
       properties : {
-        'background-color' : '#bada55',
         'border-radius' : radius + 'px',
         'background-image' : 'url(images/' + options.image + ')',
         'background-size' : 'cover'
@@ -28,6 +24,7 @@ class Author extends Node {
       .setAbsoluteSize(radius, radius)
       .setOrigin(0.5, 0.5)
       .setMountPoint(0.5, 0.5)
+      .setAlign(null, 0.5)
       .addUIEvent('click')
 
     this._startAnimation()
@@ -43,7 +40,7 @@ class Author extends Node {
     }
 
     if(event === 'window:resize') {
-      currentWidth = payload.width
+      var currentWidth = payload.width
       var countAuthors = payload.countAuthors
       var start = currentWidth/countAuthors
       var posX = (start * this.options.id) + (start/2) 
